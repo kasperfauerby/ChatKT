@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "885520705653",
+    "project_id": "chatkt-4049a",
+    "storage_bucket": "chatkt-4049a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885520705653:android:4f7d5ceead9e5fe98c703c",
+        "android_client_info": {
+          "package_name": "com.example.chatkt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "885520705653-0ctv6pm0jd76npq7tdsnufbevrdh3i2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIIVTcNSUhuU3477o-OEcBsm9_13SAPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "885520705653-0ctv6pm0jd76npq7tdsnufbevrdh3i2q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
