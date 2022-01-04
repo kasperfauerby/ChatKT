@@ -18,6 +18,10 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>): Recycler
         return UserViewHolder(view)
     }
 
+
+
+    // ViewHolder med onClick som sender brugeren i chat rum med den valgte
+
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser = userList[position]
 
@@ -25,6 +29,8 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>): Recycler
 
         holder.itemView.setOnClickListener{
             val intent = Intent(context,ChatActivity::class.java)
+
+            // extra data sendes med i intent
 
             intent.putExtra("name", currentUser.name)
             intent.putExtra("uid", currentUser.uid)

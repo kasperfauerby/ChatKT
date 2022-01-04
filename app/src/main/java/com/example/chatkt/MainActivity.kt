@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Der angives hvilken xml der skal vises i appen. R = res, layout = layout directory, activity_main = xml fil
         setContentView(R.layout.activity_main)
 
         mAuth = FirebaseAuth.getInstance()
@@ -35,40 +37,37 @@ class MainActivity : AppCompatActivity() {
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
 
+
+        // Listen med brugere hentes
         mDbRef.child("user").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-
 
                 userList.clear()
                 for (postSnapshot in snapshot.children){
                     val currentUser = postSnapshot.getValue(User::class.java)
 
 
-                    // Dont add current logged in user to chatable user list
+                    // Sørger for at man ikke ser sig selv på listen, da det ikke skal være en feature at kunne skrive til sig selv.
 
                     if(mAuth.currentUser?.uid != currentUser?.uid){
                         userList.add(currentUser!!)
                     }
-
-
-
                 }
                 adapter.notifyDataSetChanged()
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
-
-
         })
     }
 
+    // menu punkt: Log Out
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+
+    // function til at logge ud
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.logout){
 

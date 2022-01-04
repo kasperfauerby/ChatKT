@@ -20,6 +20,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<Message>
     private lateinit var mDbRef: DatabaseReference
 
+    // de to variabler står for et unikt id id for et et chat rum mellem to parter
     var receiverRoom: String? = null
     var senderRoom: String? = null
 
@@ -27,7 +28,7 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-
+        //Navnet på personen der chattes. Kommer med fra user adapter intent
         val name = intent.getStringExtra("name")
         val receiverUid = intent.getStringExtra("uid")
 
@@ -36,12 +37,13 @@ class ChatActivity : AppCompatActivity() {
         mDbRef = FirebaseDatabase.getInstance("https://chatkt-4049a-default-rtdb.europe-west1.firebasedatabase.app").getReference()
 
 
+        // Chat rum id er baseret på summen af de to parters id
         senderRoom = receiverUid + senderUid
         receiverRoom = senderUid + receiverUid
 
 
 
-
+        // Top action bar for navnet som personen man chatter med som title
         supportActionBar?.title = name
 
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
@@ -49,17 +51,20 @@ class ChatActivity : AppCompatActivity() {
         sendButton = findViewById(R.id.sendButton)
 
         messageList = ArrayList()
+
+        // Listen med alle beskeder behandles hos adapteren og placeres korrekt efter som de er sendt eller modtaget.
         messageAdapter = MessageAdapter(this, messageList)
 
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
-        // data til recycler view (besked tråd)
+        // henter data til recycler view (besked tråd)
         mDbRef.child("chats").child(senderRoom!!).child("messages")
             .addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
+                    //clear so beskedtråden ikke duplikeres
                     messageList.clear()
 
                     for (postSnapshot in snapshot.children){
@@ -79,11 +84,13 @@ class ChatActivity : AppCompatActivity() {
             })
 
 
-        // tilføjer besked til database
+        // Sender beskeden og tilføjer besked til database
         sendButton.setOnClickListener{
 
             val message = messageBox.text.toString()
             val messageObject = Message(message,senderUid)
+
+            //push til database
 
             mDbRef.child("chats").child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
@@ -91,6 +98,7 @@ class ChatActivity : AppCompatActivity() {
                         .setValue(messageObject)
                 }
 
+            //gør inputfeltet tomt efter besked er sendt
             messageBox.setText("")
 
 

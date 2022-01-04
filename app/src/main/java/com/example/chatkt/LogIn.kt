@@ -36,18 +36,20 @@ class LogIn : AppCompatActivity() {
             startActivity(intent)
     }
 
+        // login knap tager data fra input felter
+
         btnLogin.setOnClickListener{
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
             login(email,password);
-
-
         }
-
-
-
     }
+
+    //login function som tjekker om brugeren findes på firebase
+
+    //Success: brugeren kastes videre til main activity, som er dashboard over brugere man kan chatte med
+
     private fun login (email: String, password: String){
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->

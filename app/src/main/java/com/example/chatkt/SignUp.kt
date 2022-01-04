@@ -42,6 +42,8 @@ class SignUp : AppCompatActivity() {
         }
     }
 
+    // metode for sign up
+
     private fun signUp(name: String, email: String, password: String){
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -58,6 +60,8 @@ class SignUp : AppCompatActivity() {
             }
     }
 
+
+    // den nye bruger skrives til firebase databasen
     private fun addUserToDatabase(name: String, email: String, uid: String){
         mDbRef = FirebaseDatabase.getInstance("https://chatkt-4049a-default-rtdb.europe-west1.firebasedatabase.app").getReference()
         mDbRef.child("user").child(uid).setValue(User(name,email,uid))

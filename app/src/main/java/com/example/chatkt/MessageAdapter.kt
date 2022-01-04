@@ -16,6 +16,9 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
+
+        // her inflates beskeden enten som sent eller received og skriver den ind i recyclerview i frontend
+
     if (viewType == 1 ) {
         val view: View = LayoutInflater.from(context).inflate(R.layout.received, parent, false)
         return ReceivedViewHolder(view)
@@ -28,6 +31,9 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentMessage = messageList[position]
+
+        //Tekst hentes fra message object fra messageliste
+
         if (holder.javaClass == SentViewHolder::class.java) {
             // sent
 
@@ -43,8 +49,15 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
 
     }
 
+
+
+        // Vi finder ud af om beskeden er til eller fra den loggede bruger
+
     override fun getItemViewType(position: Int): Int {
+
         val currentMessage = messageList[position]
+
+        // Vi tjekker sender id
 
         if (FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.senderId)){
             return ITEM_SENT
@@ -53,11 +66,17 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
         }
     }
 
+
+
+    // Metode til total antal af beskeder
     override fun getItemCount(): Int {
 
         return messageList.size
 
     }
+
+
+    //Chat beskeden angives som item til recyclerview
 
     class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
