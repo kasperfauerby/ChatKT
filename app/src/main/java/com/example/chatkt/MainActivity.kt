@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
 
                     // Dont add current logged in user to chatable user list
+
                     if(mAuth.currentUser?.uid != currentUser?.uid){
                         userList.add(currentUser!!)
                     }
